@@ -81,16 +81,58 @@
 - 삽입, 수정, 삭제가 일어나지 않는 경우
 - 서비스 따라 판단
 
+## CREATE TABLE, ALTER TABLE
+
 ## SELECT
+```
+SELECT * FROM employee
+```
+
 ### where
+```
+SELECT * FROM employee WHERE name = ?
+```
 ### projection
+```
+SELECT id, name FROM employee WHERE name = ?
+```
+- AS
+```
+SELECT id as no, name FROM employee WHERE name = ?
+```
 ### order
+```
+SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary
+```
 ### limit
+```
+SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary LIMIT 10
+```
 ### group
-### count
+```
+SELECT AVG(salary) FROM employee WHERE name = ? GROUP BY team
+```
+### count, avg, min, max, sum
 ## UPDATE
+```
+UPDATE employee SET salary = ? WHERE name = ?
+```
 ## INSERT INTO
+```
+INSERT INTO employee (name, salary, team) VALUES ("원초", 5000, "개발"), ("투초", 4000, "디자인")
+```
 ## DELETE
+- hard delete
+```
+DELETE FROM employee WHERE id = ?
+```
+- soft delete
+```
+UPDATE employee SET quit_date = NOW() WHERE id = ?
+```
+```
+SELECt * FROM employee WHERE quit_date IS NULL
+```
 ## JOIN
 ### INNER JOIN
 ### LEFT/RIGHT JOIN
