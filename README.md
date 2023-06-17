@@ -140,14 +140,42 @@ SELECt * FROM employee WHERE quit_date IS NULL
 ```
 ## JOIN
 ### INNER JOIN
+```
+```
 ### LEFT/RIGHT JOIN
+```
+```
+
 ### FULL OUTER JOIN
+```
+```
 # INDEX
 (a, b, c) index
+
+```
+CREATE INDEX
+```
 # TRANSACTION
 ATM
+
+```
+START TRANSACTION;
+COMMIT;
+ROLLBACK;
+```
+
 ## ACID
-# Procedure
+
+# Stored Procedure
+```
+CREATE PROCEDURE procedure_name
+AS
+sql_statement
+GO;
+
+EXEC procedure_name;
+```
+
 # ETC
 ## NoSQL
 MongoDB, Redis
