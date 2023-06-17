@@ -1,9 +1,14 @@
-# SQL
+# Database(DB)
 1. 데이터베이스를 왜 배워야 하는가? 
   - 회사에서 가장 중요하게 생각하는게 뭘까?
   - 유튜브 소스코드를 얻었다 쳐보자
-2. MySQL 설치하기(PostgreSQL, MSSQL, Oracle, MariaDB, SQLite 등등)
-  - [링크](https://dev.mysql.com/downloads/installer/)
+2. SQL(Structured Query Language)
+  - ANSI SQL
+3. DBMS(Database Management System)
+  - MySQL 설치하기(PostgreSQL, MSSQL, Oracle, MariaDB, SQLite 등등)
+  - [다운로드 링크](https://dev.mysql.com/downloads/installer/)
+  - 5버전 8버전 다 괜찮음
+
 ## 테이블 만들기
 1. 엑셀이라고 생각해보자
 2. DDL(Definition), DQL(Query), DML(Manipulation), DCL(Control), TCL(Transaction)
