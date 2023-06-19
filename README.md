@@ -18,6 +18,9 @@
 1. 1:N
 2. 1:1
 3. M:N
+
+[실전링크](https://www.erdcloud.com/d/QqKNELMS6e3AB3xia)
+
 ## 정규화(Normalization)
 - 엑셀이라고 생각하면 안된다
 - 삽입, 수정, 삭제 시 문제가 없나 생각해보기
