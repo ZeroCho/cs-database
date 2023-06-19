@@ -10,22 +10,22 @@
   - 5버전 8버전 다 괜찮음
 
 ## 테이블 만들기
-1. 엑셀이라고 생각해보자
-2. DDL(Definition), DQL(Query), DML(Manipulation), DCL(Control), TCL(Transaction)
-  - [참고](https://www.geeksforgeeks.org/sql-ddl-dql-dml-dcl-tcl-commands/)
-## ERD
+
+엑셀이라고 생각해보자
+
+### ERD
 관계 생각하기
-1. 1:N
-2. 1:1
-3. M:N
+1. 1:N(일대다)
+2. 1:1(일대일)
+3. M:N(다대다)
 
 [실전링크](https://www.erdcloud.com/d/QqKNELMS6e3AB3xia)
 
-## 정규화(Normalization)
+### 정규화(Normalization)
 - 엑셀이라고 생각하면 안된다
 - 삽입, 수정, 삭제 시 문제가 없나 생각해보기
 
-### 1NF
+#### 1NF
 
 |이름|전화번호|
 |---|----|
@@ -56,7 +56,7 @@
 - PK
 - FK
 
-### 2NF
+#### 2NF
 - 복합키 모두에 종속?
 
 |이름|언어|전화번호|
@@ -65,7 +65,7 @@
 |제로초|TS|010-1234-5678|
 |제로초|JAVA|010-1234-5678|
 
-### 3NF
+#### 3NF
 - Key가 아닌 컬럼들의 종속관계
 
 |아이디|이름|소속|서비스|
@@ -84,12 +84,33 @@
 |원초|카|카카오톡|
 |투초|배|배민1|
 
-### 역정규화(Denormalization)
+#### 역정규화(Denormalization)
 - JOIN, JOIN, JOIN
 - 삽입, 수정, 삭제가 일어나지 않는 경우
 - 서비스 따라 판단
 
 ## CREATE TABLE, ALTER TABLE
+DDL(Definition), DQL(Query), DML(Manipulation), DCL(Control), TCL(Transaction)
+  - [참고](https://www.geeksforgeeks.org/sql-ddl-dql-dml-dcl-tcl-commands/)
+
+```
+CREATE TABLE employee (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(20),
+  email VARCHAR(50) NOT NULL UNIQUE,
+  salary INT NOT NULL DEFAULT 2500,
+  team VARCHAR(10) NOT NULL,
+  role_id INT NOT NULL REFERENCES role (id),
+  quit_at DATE NULL
+) ENGINE=InnoDB;
+```
+```
+CREATE TABLE role (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name CHAR(2) NOT NULL UNIQUE,
+  min_salary INT NOT NULL,
+) ENGINE=InnoDB;
+```
 
 ## SELECT
 ```
