@@ -11,15 +11,7 @@
 
 ## 테이블 만들기
 
-엑셀이라고 생각해보자
-
-### ERD
-관계 생각하기
-1. 1:N(일대다)
-2. 1:1(일대일)
-3. M:N(다대다)
-
-[실전링크](https://www.erdcloud.com/d/QqKNELMS6e3AB3xia)
+엑셀이라고 생각해보자(row, column)
 
 ### 정규화(Normalization)
 - 엑셀이라고 생각하면 안된다
@@ -47,8 +39,15 @@
 |제로초|010-1234-5678|
 |제로초|010-2345-6789|
 
+- 나중에 JOIN으로 합침
 
-- JOIN
+### ERD
+관계 생각하기
+1. 1:N(일대다)
+2. 1:1(일대일)
+3. M:N(다대다)
+
+[실전링크](https://www.erdcloud.com/d/QqKNELMS6e3AB3xia)
 
 #### Key
 - PK(기본키, primary key)
