@@ -109,21 +109,11 @@
 - 삽입, 수정, 삭제가 일어나지 않는 경우
 - 서비스 따라 판단
 
-## CREATE TABLE, ALTER TABLE
+## CREATE TABLE
 DDL(Definition), DQL(Query), DML(Manipulation), DCL(Control), TCL(Transaction)
   - [참고](https://www.geeksforgeeks.org/sql-ddl-dql-dml-dcl-tcl-commands/)
 
-```
-CREATE TABLE employee (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(20),
-  email VARCHAR(50) NOT NULL UNIQUE,
-  salary INT NOT NULL DEFAULT 2500,
-  team VARCHAR(10) NOT NULL,
-  role_id INT NOT NULL REFERENCES role (id),
-  quit_at DATE NULL
-) ENGINE=InnoDB;
-```
+fk 없는 거 먼저 만들기
 ```
 CREATE TABLE `zerocho`.`role` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -134,6 +124,47 @@ CREATE TABLE `zerocho`.`role` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+```
+
+```
+CREATE TABLE `employee` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `salary` int unsigned NOT NULL,
+  `team` varchar(20) NOT NULL,
+  `quit_date` date DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `role_id` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `employee_role_fk_idx` (`role_id`),
+  CONSTRAINT `employee_role_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='사원테이블'
+```
+
+
+### ALTER, DROP, TRUNCATE
+
+## UPDATE
+```
+UPDATE employee SET salary = ? WHERE name = ?
+```
+## INSERT INTO
+```
+INSERT INTO employee (name, salary, team) VALUES ("원초", 5000, "개발"), ("투초", 4000, "디자인")
+```
+## DELETE
+- hard delete
+```
+DELETE FROM employee WHERE id = ?
+```
+- soft delete
+```
+UPDATE employee SET quit_date = NOW() WHERE id = ?
+```
+```
+SELECt * FROM employee WHERE quit_date IS NULL
 ```
 
 ## SELECT
@@ -166,26 +197,7 @@ SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary LIMIT 10
 SELECT AVG(salary) FROM employee WHERE name = ? GROUP BY team
 ```
 ### count, avg, min, max, sum
-## UPDATE
-```
-UPDATE employee SET salary = ? WHERE name = ?
-```
-## INSERT INTO
-```
-INSERT INTO employee (name, salary, team) VALUES ("원초", 5000, "개발"), ("투초", 4000, "디자인")
-```
-## DELETE
-- hard delete
-```
-DELETE FROM employee WHERE id = ?
-```
-- soft delete
-```
-UPDATE employee SET quit_date = NOW() WHERE id = ?
-```
-```
-SELECt * FROM employee WHERE quit_date IS NULL
-```
+
 ## JOIN
 ### INNER JOIN
 ```
