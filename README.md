@@ -126,6 +126,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 ```
 
+ON UPDATE, ON DELETE 옵션들 기억하기
 ```
 CREATE TABLE `employee` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
