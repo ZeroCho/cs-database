@@ -164,8 +164,56 @@ DELETE FROM employee WHERE id = ?
 ```
 UPDATE employee SET quit_date = NOW() WHERE id = ?
 ```
+나중에 조회 시에는
 ```
-SELECt * FROM employee WHERE quit_date IS NULL
+SELECT * FROM employee WHERE quit_date IS NULL
+```
+
+## ERDCloud
+
+가져오기 메뉴에서 다음 SQL 복붙!
+```
+CREATE TABLE `role` (
+	`id`	int	NOT NULL	COMMENT '직책아이디',
+	`name`	varchar(10)	NOT NULL	COMMENT '직책이름',
+	`min_salary`	int	NOT NULL	DEFAULT '2500'	COMMENT '최저연봉'
+);
+
+CREATE TABLE `employee` (
+	`id`	int	NOT NULL,
+	`name`	varchar(45)	NOT NULL,
+	`email`	varchar(100)	NOT NULL,
+	`salary`	int	NOT NULL,
+	`team`	varchar(20)	NOT NULL,
+	`quit_date`	date	NULL,
+	`created_at`	datetime	NULL,
+	`role_id`	int	NOT NULL	COMMENT '직책아이디'
+);
+
+CREATE TABLE `employee_info` (
+	`id`	int	NOT NULL,
+	`address`	varchar(100)	NULL,
+	`etc`	text	NULL
+);
+
+ALTER TABLE `role` ADD CONSTRAINT `PK_ROLE` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `employee` ADD CONSTRAINT `PK_EMPLOYEE` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `employee_info` ADD CONSTRAINT `PK_EMPLOYEE_INFO` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `employee_info` ADD CONSTRAINT `FK_employee_TO_employee_info_1` FOREIGN KEY (
+	`id`
+)
+REFERENCES `employee` (
+	`id`
+);
 ```
 
 ## SELECT
@@ -176,6 +224,12 @@ SELECT * FROM employee
 ### where
 ```
 SELECT * FROM employee WHERE name = ?
+```
+```
+SELECT * FROM employee WHERE created_at BETWEEN '2023-05-01' AND '2023-06-30'
+```
+```
+SELECT * FROM employee WHERE salary > 3000 OR team = '기획팀'
 ```
 ### projection
 ```
@@ -189,43 +243,69 @@ SELECT id as no, name FROM employee WHERE name = ?
 ```
 SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary
 ```
+```
+SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary, role_id
+```
 ### limit
 ```
 SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary LIMIT 10
 ```
-### group
+### offset
 ```
-SELECT AVG(salary) FROM employee WHERE name = ? GROUP BY team
+SELECT id as no, name FROM employee WHERE name = ? ORDER BY salary DESC LIMIT 10 OFFSET 10
+```
+커서 방식 vs OFFSET 방식
+```
+SELECT id as no, name FROM employee WHERE name = ? AND id < 8 ORDER BY salary DESC LIMIT 10
+```
+
+### group by, having
+```
+SELECT AVG(salary) FROM employee WHERE name = ? GROUP BY team HAVING team = '개발팀' OR team = '디자인팀'
 ```
 ### count, avg, min, max, sum
 
 ## JOIN
 ### INNER JOIN
+null 나올 수 없음
 ```
+SELECT ... JOIN ... ON ...
 ```
 ### LEFT/RIGHT JOIN
+null 나올 수 있음
 ```
+SELECT ... LEFT JOIN ... ON ...
 ```
 
 ### FULL OUTER JOIN
 ```
+SELECT ... LEFT JOIN ... ON ...
+UNION
+SELECT ... RIGHT JOIN ... ON ...
 ```
-# INDEX
-(a, b, c) index
+### CROSS JOIN
+```
+SELECT ... FROM a JOIN b
+SELECT ... FROM a CROSS JOIN b
+SELECT ... FROM a, b
+```
 
+# INDEX
+- (a, b, c) index
+- a를 안 쓰면 무용지물
 ```
 CREATE INDEX
+DROP INDEX
 ```
 # TRANSACTION
 ATM
-
+## ACID
 ```
 START TRANSACTION;
 COMMIT;
 ROLLBACK;
 ```
-
-## ACID
+## LOCK
 
 # Stored Procedure
 ```
@@ -241,6 +321,5 @@ EXEC procedure_name;
 ## NoSQL
 MongoDB, Redis
 ## replication
-## LOCK
 ## sharding
 ## CAP theorem
