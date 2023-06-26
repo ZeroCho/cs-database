@@ -309,12 +309,39 @@ ROLLBACK;
 
 # Stored Procedure
 ```
-CREATE PROCEDURE procedure_name
-AS
-sql_statement
-GO;
+DELIMITER //
+CREATE PROCEDURE increaseMinSalary(money INT, rid INT)
+BEGIN
+	START TRANSACTION;
+    UPDATE zerocho.role SET min_salary = money WHERE id = rid;
+    UPDATE zerocho.employee SET salary = money WHERE role_id = rid AND salary < money;
+	COMMIT;
+END //
+DELIMITER ;
 
 EXEC procedure_name;
+```
+# Trigger
+```
+DELIMITER //
+CREATE TRIGGER updateSalaryWhenMinSalaryChange AFTER UPDATE ON zerocho.role
+FOR EACH ROW
+BEGIN
+	UPDATE zerocho.employee SET salary = NEW.min_salary WHERE role_id = NEW.id AND salary < NEW.min_salary;
+END //
+DELIMITER ;
+```
+```
+SHOW TRIGGERS;
+DROP TRIGGER updateSalaryWhenMinSalaryChange
+```
+
+# View
+```
+CREATE OR REPLACE VIEW zerocho.ep_view
+AS SELECT employee_id, project_id, role_id, e.name as employee_name, salary, team 
+FROM zerocho.employee e LEFT JOIN zerocho.role r ON e.role_id = r.id
+LEFT JOIN zerocho.employee_project ep ON e.id = ep.employee_id;
 ```
 
 # ETC
