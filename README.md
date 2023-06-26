@@ -298,13 +298,19 @@ CREATE INDEX
 DROP INDEX
 ```
 # TRANSACTION
-ATM
-## ACID
 ```
 START TRANSACTION;
+
 COMMIT;
 ROLLBACK;
 ```
+
+## ACID
+- Atomicity
+- Consistency
+- Isolation
+- Durability
+
 ## LOCK
 
 # Stored Procedure
@@ -321,6 +327,7 @@ DELIMITER ;
 
 EXEC procedure_name;
 ```
+
 # Trigger
 ```
 DELIMITER //
